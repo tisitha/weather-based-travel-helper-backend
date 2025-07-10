@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: Weather-based travel helper
+
+tomtom:
+  api:
+    key: ${TOMTOM.API.KEY}
