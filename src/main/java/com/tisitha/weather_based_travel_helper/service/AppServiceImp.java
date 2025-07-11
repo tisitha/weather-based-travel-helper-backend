@@ -33,6 +33,10 @@ public class AppServiceImp implements AppService {
             String lat = nearbyResult.getPosition().getLat();
             String lon = nearbyResult.getPosition().getLon();
 
+            appResponseDto.setLatitude(lat);
+
+            appResponseDto.setLongitude(lon);
+
             appResponseDto.setPlaceName(nearbyResult.getPoi().getName());
 
             WeatherDataResponse weatherDataResponse = openMetroApiService.getWeather(lat,lon,date);

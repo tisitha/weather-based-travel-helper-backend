@@ -15,6 +15,10 @@ public class AppResponseDto {
 
     private String precipitationSum;
 
+    private String latitude;
+
+    private String longitude;
+
     private String precipitationHour1;
 
     private String precipitationHour2;
