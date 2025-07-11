@@ -2,6 +2,16 @@ spring:
   application:
     name: Weather-based travel helper
 
+resilience4j:
+  retry:
+    instances:
+      placesRetry:
+        max-attempts: 5
+        wait-duration: 2s
+        retry-exceptions:
+          - java.io.IOException
+          - org.springframework.web.client.HttpServerErrorException
+
 tomtom:
   api:
     key: ${TOMTOM.API.KEY}
