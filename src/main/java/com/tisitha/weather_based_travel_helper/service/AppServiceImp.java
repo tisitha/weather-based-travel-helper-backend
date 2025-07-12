@@ -3,10 +3,17 @@ package com.tisitha.weather_based_travel_helper.service;
 import com.tisitha.weather_based_travel_helper.dto.AppResponseDto;
 import com.tisitha.weather_based_travel_helper.dto.geoDtos.GeoLocationResponse;
 import com.tisitha.weather_based_travel_helper.dto.openMetroDtos.WeatherDataResponse;
+import com.tisitha.weather_based_travel_helper.dto.tomtomDtos.Poi;
+import com.tisitha.weather_based_travel_helper.dto.tomtomDtos.Position;
 import com.tisitha.weather_based_travel_helper.dto.tomtomDtos.Result;
+import com.tisitha.weather_based_travel_helper.exception.InvalidDateException;
+import com.tisitha.weather_based_travel_helper.exception.LocationNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +26,36 @@ public class AppServiceImp implements AppService {
     private final OpenMetroApiService openMetroApiService;
 
     public List<AppResponseDto> getData(String placeName,String date){
+
+        LocalDate parsedDate;
+        try {
+            parsedDate = LocalDate.parse(date);
+        } catch (DateTimeParseException e) {
+            throw new InvalidDateException("Invalid date format. Use yyyy-mm-dd.");
+        }
+
+        LocalDate today = LocalDate.now();
+        LocalDate maxDate = today.plusDays(15);
+
+        if (parsedDate.isBefore(today) || parsedDate.isAfter(maxDate)) {
+            throw new InvalidDateException("Date must be between today and the next 15 days.");
+        }
+
         GeoLocationResponse geoLocationResponse = geoCodingApiService.searchPlace(placeName);
+
+        if (geoLocationResponse.getResults()==null){
+            throw new LocationNotFoundException("can not find a city by name");
+        }
+
         String latitude = geoLocationResponse.getResults().getFirst().getLatitude();
         String longitude = geoLocationResponse.getResults().getFirst().getLongitude();
 
         List<Result> nearbyResults = tomtomApiService.findPlaces(latitude,longitude).getResults();
         List<AppResponseDto> appResponseDtoList = new ArrayList<>();
+
+        if(nearbyResults.isEmpty()){
+            throw new LocationNotFoundException("can not find a city by name");
+        }
 
         for(Result nearbyResult:nearbyResults){
 
