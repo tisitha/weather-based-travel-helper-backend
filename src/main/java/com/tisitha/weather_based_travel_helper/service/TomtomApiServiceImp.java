@@ -4,6 +4,7 @@ import com.tisitha.weather_based_travel_helper.dto.tomtomDtos.NearbySearchRespon
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -19,6 +20,7 @@ public class TomtomApiServiceImp implements TomtomApiService{
         this.tomtomRestClient = tomtomRestClient;
     }
 
+    @Cacheable(value = "nearbyPlaces", key = "#latitude+'_'+#longitude")
     @Retry(name = "findPlacesRetry")
     public NearbySearchResponse findPlaces(String latitude,String longitude){
         return tomtomRestClient.get()

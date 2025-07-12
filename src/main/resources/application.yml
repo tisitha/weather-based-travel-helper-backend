@@ -1,6 +1,12 @@
 spring:
   application:
     name: Weather-based travel helper
+  cache:
+    type: redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
 resilience4j:
   retry:
