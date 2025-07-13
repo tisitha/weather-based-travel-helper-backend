@@ -3,13 +3,10 @@ package com.tisitha.weather_based_travel_helper.service;
 import com.tisitha.weather_based_travel_helper.dto.AppResponseDto;
 import com.tisitha.weather_based_travel_helper.dto.geoDtos.GeoLocationResponse;
 import com.tisitha.weather_based_travel_helper.dto.openMetroDtos.WeatherDataResponse;
-import com.tisitha.weather_based_travel_helper.dto.tomtomDtos.Poi;
-import com.tisitha.weather_based_travel_helper.dto.tomtomDtos.Position;
 import com.tisitha.weather_based_travel_helper.dto.tomtomDtos.Result;
 import com.tisitha.weather_based_travel_helper.exception.InvalidDateException;
 import com.tisitha.weather_based_travel_helper.exception.LocationNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -76,35 +73,44 @@ public class AppServiceImp implements AppService {
 
             appResponseDto.setPrecipitationSum(String.valueOf(weatherDataResponse.getDaily().getPrecipitation_sum().getFirst()));
 
-            appResponseDto.setPrecipitationHour1(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(0)));
-            appResponseDto.setPrecipitationHour2(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(1)));
-            appResponseDto.setPrecipitationHour3(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(2)));
-            appResponseDto.setPrecipitationHour4(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(3)));
-            appResponseDto.setPrecipitationHour5(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(4)));
-            appResponseDto.setPrecipitationHour6(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(5)));
-            appResponseDto.setPrecipitationHour7(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(6)));
-            appResponseDto.setPrecipitationHour8(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(7)));
-            appResponseDto.setPrecipitationHour9(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(8)));
-            appResponseDto.setPrecipitationHour10(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(9)));
-            appResponseDto.setPrecipitationHour11(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(10)));
-            appResponseDto.setPrecipitationHour12(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(11)));
-            appResponseDto.setPrecipitationHour13(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(12)));
-            appResponseDto.setPrecipitationHour14(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(13)));
-            appResponseDto.setPrecipitationHour15(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(14)));
-            appResponseDto.setPrecipitationHour16(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(15)));
-            appResponseDto.setPrecipitationHour17(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(16)));
-            appResponseDto.setPrecipitationHour18(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(17)));
-            appResponseDto.setPrecipitationHour19(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(18)));
-            appResponseDto.setPrecipitationHour20(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(19)));
-            appResponseDto.setPrecipitationHour21(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(20)));
-            appResponseDto.setPrecipitationHour22(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(21)));
-            appResponseDto.setPrecipitationHour23(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(22)));
-            appResponseDto.setPrecipitationHour24(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(23)));
+            List<String> precipitationHourly = getPrecipitationHourly(weatherDataResponse);
+
+            appResponseDto.setPrecipitationHourly(precipitationHourly);
 
             appResponseDtoList.add(appResponseDto);
 
         }
         return appResponseDtoList;
+    }
+
+    private static List<String> getPrecipitationHourly(WeatherDataResponse weatherDataResponse) {
+        List<String> precipitationHourly = new ArrayList<>();
+
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(0)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(1)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(2)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(3)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(4)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(5)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(6)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(7)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(8)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(9)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(10)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(11)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(12)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(13)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(14)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(15)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(16)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(17)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(18)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(19)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(20)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(21)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(22)));
+        precipitationHourly.add(String.valueOf(weatherDataResponse.getHourly().getPrecipitation().get(23)));
+        return precipitationHourly;
     }
 
 }
