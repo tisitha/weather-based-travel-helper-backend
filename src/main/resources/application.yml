@@ -5,8 +5,8 @@ spring:
     type: redis
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
 
 resilience4j:
   retry:
@@ -22,4 +22,4 @@ tomtom:
   api:
     key: ${TOMTOM.API.KEY}
 frontend:
-  url: http://localhost:5173/
+  url: ${FRONTEND_URL}
