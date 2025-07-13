@@ -21,3 +21,5 @@ resilience4j:
 tomtom:
   api:
     key: ${TOMTOM.API.KEY}
+frontend:
+  url: http://localhost:5173/
