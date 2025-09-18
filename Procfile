@@ -1,1 +1,1 @@
-web: java -jar target/your-app.jar --server.port=$PORT
+web: java -jar target/weather-based-travel-helper.jar --server.port=$PORT
