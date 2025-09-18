@@ -1,1 +1,0 @@
-web: java -jar target/weather-based-travel-helper.jar --server.port=$PORT
